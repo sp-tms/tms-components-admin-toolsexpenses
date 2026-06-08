@@ -1,0 +1,72 @@
+{
+	"name" : "Tools Expenses",
+	"route" : "tools/expenses",
+	"description" : "<p>TMS expenses component</p>",
+	"module_type" : "components",
+	"app_type" : "tms",
+	"category" : "admin",
+	"version" : "0.0.0",
+	"repo" : "https://github.com/sp-tms/tms-components-admin-toolsexpenses",
+	"class" : "Apps\\Tms\\Components\\Tools\\Expenses\\ExpensesComponent",
+	"dependencies" : 
+	{
+		"core" : 
+		{
+			"name" : "Core",
+			"version" : "0.0.0-rc.15",
+			"repo" : "https://github.com/sp-framework/core"
+		},
+		"apptype" : 
+		{
+			"name" : "Transport Management System",
+			"version" : "0.0.0",
+			"repo" : "https://github.com/sp-tms/tms"
+		},
+		"packages" : 
+		[
+			{
+				"name" : "ToolsExpenses",
+				"version" : "0.0.0",
+				"repo" : "https://github.com/sp-tms/tms-packages-tools-toolsexpenses"
+			}
+		],
+		"middlewares" : [],
+		"views" : [],
+		"externals" : 
+		{
+			"composer" : 
+			{
+				"require" : []
+			},
+			"config" : 
+			{
+				"allow-plugins" : []
+			},
+			"extra" : 
+			{
+				"patches" : []
+			}
+		}
+	},
+	"menu" : 
+	{
+		"tools" : 
+		{
+			"title" : "tools",
+			"icon" : "cogs",
+			"childs" : 
+			{
+				"expenses" : 
+				{
+					"title" : "expenses",
+					"icon" : "circle",
+					"link" : "tools/expenses"
+				}
+			}
+		},
+		"seq" : "0"
+	},
+	"widgets" : [],
+	"filters" : [],
+	"settings" : []
+}
