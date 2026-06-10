@@ -2,6 +2,7 @@
 
 namespace Apps\Tms\Components\Tools\Expenses;
 
+use Apps\Tms\Packages\Adminltetags\Traits\DynamicTable;
 use Apps\Tms\Packages\Tools\Expenses\ToolsExpenses;
 use System\Base\BaseComponent;
 
@@ -22,6 +23,8 @@ class ExpensesComponent extends BaseComponent
     public function viewAction()
     {
         if (isset($this->getData()['id'])) {
+            $this->view->expenseTypes = $this->expensesPackage->getExpenseTypes();
+
             if ($this->getData()['id'] != 0) {
                 $expense = $this->expensesPackage->getById((int) $this->getData()['id']);
 
@@ -45,16 +48,31 @@ class ExpensesComponent extends BaseComponent
                 ]
             ];
 
+        $replaceColumns =
+            function ($dataArr) {
+                if ($dataArr && is_array($dataArr) && count($dataArr) > 0) {
+                    foreach ($dataArr as &$data) {
+                        if ($data['type'] == '1') {
+                            $data['type'] = 'Advance (' . $data['type'] . ')';
+                        } else if ($data['type'] == '2') {
+                            $data['type'] = 'Reimburse (' . $data['type'] . ')';
+                        }
+                    }
+                }
+
+                return $dataArr;
+            };
+
         $this->generateDTContent(
             $this->expensesPackage,
             'tools/expenses/view',
             null,
-            ['name'],
+            ['name', 'type'],
             true,
-            ['name'],
+            ['name', 'type'],
             $controlActions,
-            [],
-            null,
+            ['type' => 'type (id)'],
+            $replaceColumns,
             'name'
         );
 
@@ -68,7 +86,7 @@ class ExpensesComponent extends BaseComponent
     {
         $this->requestIsPost();
 
-        $this->expensesPackage->addUom($this->postData());
+        $this->expensesPackage->addExpense($this->postData());
 
         $this->addResponse(
             $this->expensesPackage->packagesData->responseMessage,
@@ -83,7 +101,7 @@ class ExpensesComponent extends BaseComponent
     {
         $this->requestIsPost();
 
-        $this->expensesPackage->updateUom($this->postData());
+        $this->expensesPackage->updateExpense($this->postData());
 
         $this->addResponse(
             $this->expensesPackage->packagesData->responseMessage,
@@ -98,7 +116,7 @@ class ExpensesComponent extends BaseComponent
     {
         $this->requestIsPost();
 
-        $this->expensesPackage->removeUom($this->postData());
+        $this->expensesPackage->removeExpense($this->postData());
 
         $this->addResponse(
             $this->expensesPackage->packagesData->responseMessage,
