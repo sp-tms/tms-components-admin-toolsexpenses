@@ -31,7 +31,14 @@
 			}
 		],
 		"middlewares" : [],
-		"views" : [],
+		"views" : 
+		[
+			{
+				"name" : "ToolsExpenses",
+				"version" : "0.0.0",
+				"repo" : "https://github.com/sp-tms/tms-views-admin-default-toolsexpenses"
+			}
+		],
 		"externals" : 
 		{
 			"composer" : 
